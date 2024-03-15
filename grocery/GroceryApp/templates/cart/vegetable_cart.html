@@ -1,0 +1,71 @@
+<style>
+    #scrollspyHeading1 {
+        padding-bottom: 3rem;
+      }
+    
+      /* Add some padding to the top of the cards */
+      .card {
+        padding: 1rem;
+      }
+    
+      /* Add some hover effects to the cards */
+      .card-hover {
+        transition: transform .3s;
+      }
+    
+      .card-hover:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+    
+      /* Add some margin to the buttons */
+      .card-block .btn {
+        margin-top: 1rem;
+      }
+   
+</style> 
+{% extends "app/base.html" %}
+{% block content %}
+<h4 id="scrollspyHeading1" style="padding-top: 100px; padding-left:15px">Fruit and Vegetables</h4>
+<div class="container">
+  <div class="row ">
+
+        {% for vg in vegetable %}
+                <div class="col-sm-3">
+                    <div class="card">
+                        <a href="{% url "groceryinfo" vg.id %}"><img class="card-img-top img-fluid" src="{{vg.grocery_image.url}}" alt="Card image cap"></a>
+                        <div class="card-block">
+                            <h4 class="card-title">{{vg.name}} - {{vg.unit}}</h4>
+                            <div class="text-center">
+                                <h5 class="font-weight-bold text-dark " style="padding-right: 80px;" ><i class="fa-solid fa-indian-rupee-sign"></i>{{vg.discounted_price}} <small class="fw-light rupee"> <del>{{vg.selling_price}}</del></small> <small class="text-danger">({{vg.discounted_percentage}}% off)</small></h5>  
+                            </div>
+                            <a href="{% url "addcart" vg.id %}"><input type="submit" value="ADD to Cart" class="btn-sm btn-outline-success"></a>
+                            
+                        </div>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+    
+</div> 
+
+<!-- <div class="container" style="padding-top: 100px;">                         
+    <div class="row">                         
+        {% for V in vegetable %}
+        <div class="col-sm-4 ">
+          <a href="" style="text-decoration: none; ">        
+            <div class="card" style="width: 18rem; height:20rem">
+                <img class="card-img-top " src="{{V.grocery_image.url}}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{V.name}}</h5>
+                   <div class="text-center">
+                        <h5 class="font-weight-bold text-dark "><i class="fa-solid fa-indian-rupee-sign"></i>{{V.discounted_price}} <small class="fw-light rupee"> {{V.selling_price}}</small> <small class="text-danger">(% off)</small></h5>  
+                    </div>
+                </div>
+            </div>
+          </a>
+        </div>       
+        {% endfor %}
+    </div>
+</div>  -->
+{% endblock content %}

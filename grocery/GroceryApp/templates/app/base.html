@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}<title>Online Groceries</title>{% endblock title %}
+    <link rel="stylesheet" href="{% static "app/css/all.min.css" %}">
+    <link rel="stylesheet" href="{% static "app/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "app/css/main.css" %}">
+    {% block css %}{% endblock css %}
+</head>
+<body>
+    {% include "app/navbar.html" %}
+    {% block content %}{% endblock content %}
+    {% include "app/footer.html" %}
+
+
+    
+    
+    
+    <script src="{% static "app/js/jquery.js" %}"></script>
+    <script src="{% static "app/js/all.min.js" %}"></script>
+    {% comment %} <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> {% endcomment %}
+    <script src="{% static "app/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "app/js/popper.js" %}"></script>
+    
+    {% comment %} <script src="{% static "app/js/all.min.js" %}"></script> {% endcomment %}
+
+    
+
+
+    </body>
+</html>

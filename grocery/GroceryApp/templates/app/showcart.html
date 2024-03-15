@@ -1,0 +1,130 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+    <section class="h-100" style="background-color: #eee; padding-top:80px">
+        <div class="container h-100 py-5">
+          <div class="row d-flex h-100" style="background-color: rgba(124, 231, 124, 0.314);">
+            <div class="col-7 mt-3">
+      
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+                <!-- <div>
+                  <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i
+                        class="fas fa-angle-down mt-1"></i></a></p>
+                </div> -->
+              </div>
+      
+              {% for item in cart_items %}
+              <div class="card rounded-3 mb-4">
+                <div class="card-body p-4">
+                  <div class="row d-flex justify-content-between align-items-center">
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                      <img
+                        src="{{item.product.grocery_image.url}}"
+                        class="img-fluid rounded-3" alt="Cotton T-shirt">
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                      <p class="lead fw-normal mb-2">{{item.product.name}}</p>
+                      <p><span class="text-muted">{{item.product.unit}}</span></p>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                        <button class="btn btn-link px-2">
+                        <a href="{% url "minusquantity" item.id %}"><i class="fas fa-minus"></i></a>
+                        </button>
+                        <div class="form-control form-control-sm">
+                            {{item.quantity}}     
+                        </div>
+                        <button class="btn btn-link px-2">
+                         <a href="{% url "addquantity" item.id %}"><i class="fas fa-plus"></i></a> 
+                        </button>
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                      <h5 class="mb-0">₹{{item.product.discounted_price}}</h5>
+                    </div>
+                    {% comment %} <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                      <a href="{% url "deletecart" item.id %}" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                    </div> {% endcomment %}
+                    <form action="{% url "deletecart" item.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                            <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-trash fa-lg"></i>
+                            </button>
+                        </div>
+                     </form>  
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              <div class="card">
+                <div class="card-body">
+                  <a href="{% url "checkout" %}"><button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay</button></a>
+                </div>
+              </div>
+      
+            </div>
+
+
+            <div class="col-md-5 mb-3" style="padding-top: 55px; width:500px">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-xs-center"><strong>Order summary</strong></h3>
+                    </div>
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <td><strong>Mart Product</strong></td>
+                                        <td class="text-xs-center"><strong>Grocery Price</strong></td>
+                                        <td class="text-xs-center"><strong>Quantity</strong></td>
+                                        <td class="text-xs-right"><strong>Total</strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in cart_items %}
+                                    <tr>
+                                        <td>{{item.product.name}}</td>
+                                        <td class="text-xs-center">₹{{item.product.discounted_price}}</td>
+                                        <td class="text-xs-center">{{item.quantity}}</td>
+                                        <td class="text-xs-right">₹{{item.product.price_and_quantity_total}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td class="highrow"></td>
+                                        <td class="highrow"></td>
+                                        <td class="highrow text-xs-center"><strong>Subtotal</strong></td>
+                                        <td class="highrow text-xs-right">₹<b>{{total}}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="highrow"></td>
+                                        <td class="highrow"></td>
+                                        <td class="highrow text-xs-center"><strong>GST</strong></td>
+                                        <td class="highrow text-xs-right">₹<b>6 %</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="emptyrow"></td>
+                                        <td class="emptyrow"></td>
+                                        <td class="emptyrow text-xs-center"><strong>Delivery Charges</strong></td>
+                                        <td class="emptyrow text-xs-right"><b>₹50</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="emptyrow"></td>
+                                        <td class="emptyrow"></td>
+                                        <td class="emptyrow text-xs-center"><strong>Total</strong></td>
+                                        <td class="emptyrow text-xs-right">₹<b>{{final_price}}</b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+          </div>
+        </div>
+      </section>
+
+{% endblock content %}
+
